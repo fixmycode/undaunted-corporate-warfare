@@ -1,0 +1,359 @@
+{
+    "$schema": "./cardlist.schema.json",
+    "characters": [
+        {
+            "name": "platoon sergeant",
+            "rank": 2,
+            "deck": 1,
+            "initiative": 9,
+            "character": "古河迷子 Furukawa Mieko",
+            "actions": [
+                {
+                    "name": "bolster",
+                    "normal": 3
+                },
+                {
+                    "name": "command",
+                    "normal": 2
+                }
+            ],
+            "image": "platoon_sergeant.png"
+        },
+        {
+            "name": "recon airgirl",
+            "rank": 1,
+            "deck": 1,
+            "character": "岩田天 Iwata Sora in XFP-56-3 flightsuit",
+            "initiative": 8,
+            "actions": [
+                {
+                    "name": "recon"
+                },
+                {
+                    "name": "strafe",
+                    "normal": 1
+                },
+                {
+                    "name": "surveil",
+                    "normal": 2
+                }
+            ],
+            "image": "recon.png"
+        },
+        {
+            "name": "squad leader",
+            "rank": 1,
+            "deck": 1,
+            "squad": "a",
+            "initiative": 7,
+            "character": "古河伶瑚 Furukawa Reiko",
+            "actions": [
+                {
+                    "name": "bolster",
+                    "normal": 2,
+                    "squad": "a"
+                },
+                {
+                    "name": "inspire",
+                    "normal": 1,
+                    "squad": "a"
+                }
+            ],
+            "image": "squad_leader.png"
+        },
+        {
+            "name": "anti-mech riflegirl",
+            "shortName": "anti-mech",
+            "rank": 0,
+            "squad": "a",
+            "deck": 4,
+            "initiative": 2,
+            "character": "小沢静 Ozawa Shizuka",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "anti-mech",
+                    "armored": 2
+                },
+                {
+                    "name": "repair"
+                }
+            ],
+            "image": "antimech.png"
+        },
+        {
+            "name": "machine gunner",
+            "shortName": "gunner",
+            "rank": 0,
+            "initiative": 3,
+            "deck": 4,
+            "squad": "a",
+            "character": "長野雀 Nagano Suzume",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 2
+                },
+                {
+                    "name": "suppress",
+                    "normal": 4
+                }
+            ],
+            "image": "gunner.png"
+        },
+        {
+            "name": "riflegirl",
+            "rank": 0,
+            "initiative": 5,
+            "squad": "a",
+            "deck": 4,
+            "character": "Sascha Ziegler",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "control"
+                }
+            ],
+            "image": "riflegirl.png"
+        },
+        {
+            "name": "scout",
+            "rank": 0,
+            "initiative": 6,
+            "squad": "a",
+            "deck": 4,
+            "character": "Elsie Ziegler",
+            "actions": [
+                {
+                    "name": "scout",
+                    "normal": 2
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "recon"
+                },
+                {
+                    "name": "conceal"
+                }
+            ],
+            "image": "scout.png"
+        },
+        {
+            "name": "mech commander",
+            "rank": 1,
+            "initiative": 7,
+            "squad": "m",
+            "deck": 1,
+            "character": "古河雅子 Furukawa Masako",
+            "actions": [
+                {
+                    "name": "bolster",
+                    "normal": 2,
+                    "squad": "m"
+                },
+                {
+                    "name": "inspire",
+                    "normal": 1,
+                    "squad": "m"
+                }
+            ],
+            "image": "mech_commander.png"
+        },
+        {
+            "name": "mech crewgirl",
+            "shortName": "crewgirl",
+            "rank": 0,
+            "squad": "m",
+            "deck": 4,
+            "icon": "crew",
+            "initiative": 3,
+            "character": "中田恵 Nakata Megumi",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "repair"
+                }
+            ],
+            "image": "crewgirl.png"
+        },
+        {
+            "name": "mech pilot",
+            "rank": 0,
+            "squad": "m",
+            "deck": 4,
+            "icon": "pilot",
+            "initiative": 2,
+            "character": "森川恵美 Morikawa Emi",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                }
+            ],
+            "image": "pilot.png"
+        },
+        {
+            "name": "mech gunner",
+            "rank": 0,
+            "squad": "m",
+            "deck": 4,
+            "icon": "gunner",
+            "initiative": 4,
+            "character": "前田由美子 Maeda Yumiko",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                }
+            ],
+            "image": "mech_gunner.png"
+        }
+    ],
+    "vehicles": [
+        {
+            "name": "assault mech",
+            "armor": 5,
+            "threshold": 3,
+            "vehicle": "XTC-78-β \"Kierkegaard\"",
+            "image": "mech.png",
+            "seats": [
+                {
+                    "icon": "pilot",
+                    "actions": [
+                        {
+                            "name": "drive",
+                            "normal": 1
+                        },
+                        {
+                            "name": "control"
+                        }
+                    ]
+                },
+                {
+                    "icon": "gunner",
+                    "actions": [
+                        {
+                            "name": "anti-mech",
+                            "armored": 3
+                        }
+                    ]
+                },
+                {
+                    "icon": "crew",
+                    "actions": [
+                        {
+                            "name": "attack",
+                            "normal": 2
+                        },
+                        {
+                            "name": "suppress",
+                            "normal": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "scout transport",
+            "armor": 5,
+            "threshold": 3,
+            "vehicle": "XPS-20-0 \"Foucault\"",
+            "seats": [
+                {
+                    "actions": [
+                        {
+                            "name": "drive",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "navigate",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {}
+            ],
+            "image": "scout_t.png"
+        },
+        {
+            "name": "light transport",
+            "armor": 5,
+            "threshold": 3,
+            "vehicle": "XPC-10-K \"Emerson\"",
+            "seats": [
+                {
+                    "actions": [
+                        {
+                            "name": "drive",
+                            "normal": 1
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "navigate",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "suppress",
+                            "normal": 3
+                        }
+                    ]
+                }
+            ],
+            "image": "light_t.png"
+        }
+    ],
+    "fog": {
+        "initiative": 1,
+        "deck": 8,
+        "name": "fog of war",
+        "quote": "the enemy is still out there",
+        "image": "fogofwar.png"
+    }
+}

@@ -1,0 +1,129 @@
+body h2 {
+    font-family: sans-serif;
+}
+
+#app {
+    margin-bottom: 20px;
+}
+
+g.rank path, g.rank circle {
+    fill: var(--main-color);
+    opacity: .9;
+}
+
+g.rank circle.background {
+    fill: #000;
+    opacity: .6;
+    mix-blend-mode: multiply;
+}
+
+g.rank circle.foreground {
+    fill: transparent;
+    stroke: var(--secondary-color);
+    stroke-width: 3;
+    opacity: 1;
+}
+
+g.rank text.squad {
+    fill: var(--secondary-color);
+    font-stretch: extra-expanded;
+    font-family: sans-serif;
+    font-size: 40pt;
+}
+
+/* name */
+
+g.name rect.box {
+    fill: var(--main-color);
+    opacity: 1;
+    mix-blend-mode: multiply;
+}
+
+g.name text.big, g.rank text {
+    fill: var(--secondary-color);
+    font-family: 'Bahnschrift';
+    font-weight: bold;
+    font-stretch: condensed;
+    font-size: 50pt;
+}
+
+g.name text.small {
+    fill: var(--accent-color);
+    font-family: 'Century Gothic';
+    font-weight: bold;
+    font-style: italic;
+    font-size: 13pt;
+    text-anchor: end;
+}
+
+g.name .icon {
+    fill: var(--secondary-color);
+}
+
+/* actions */
+
+g.actions rect.box {
+    fill: var(--secondary-color);
+    opacity: .7;
+}
+
+g.actions line {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+/* single action */
+
+g.action text {
+    fill: var(--dark-color);
+    font-family: 'Bahnschrift';
+    font-weight: normal;
+    font-size: 21pt;
+    text-transform: capitalize;
+}
+
+g.action text.value {
+    fill: var(--secondary-color);
+    text-anchor: middle;
+}
+
+g.action circle {
+    fill: var(--main-color)
+}
+
+g.action circle.armored {
+    fill: none;
+    stroke: var(--secondary-color);
+    stroke-width: 2;
+}
+
+g.action circle.secondary {
+    fill: var(--secondary-color);
+    stroke: var(--main-color);
+    stroke-width: 2;
+}
+
+g.action circle.secondary.structure {
+    stroke-dasharray: 5,3;
+    stroke-dashoffset: 1.4;
+}
+
+g.action text.value.secondary {
+    fill: var(--main-color);
+}
+
+/* seats */
+
+g.seat > circle {
+    fill: rgba(0, 0, 0, 0.7);
+    stroke: var(--main-color);
+    stroke-width: 3;
+}
+
+g.seat g.action > text {
+    fill: var(--secondary-color);
+}
+
+g.seat path.icon {
+    fill: var(--secondary-color);
+}

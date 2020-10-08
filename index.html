@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vendor/vue.js"></script>
+    <script src="vendor/svg.js"></script>
+    <script src="generator.js"></script>
+    <script src="vendor/saveAsPng.js"></script>
+</head>
+<body>
+    <h2>Corporate Warfare Card Generator</h2>
+    <div id="app">
+        <select v-model="selected">
+            <option value="resistance">Resistance</option>
+            <option value="corporation">The Corporation</option>
+        </select>
+        <button @click="savePng">Save</button>
+    </div>
+    <div id="result"></div>
+    <script src="app.js"></script>
+</body>
+</html>

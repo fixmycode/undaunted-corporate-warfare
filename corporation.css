@@ -1,0 +1,24 @@
+:root {
+    --main-color: #ff0059;
+    --accent-color: #ffccf0;
+    --secondary-color: #fff;
+    --dark-color: #000;
+    --squad-a: rgb(0, 221, 136);
+    --squad-m: rgb(0, 217, 255);
+}
+
+g.rank text.squad.a {
+    fill: var(--squad-a)
+}
+
+g.rank text.squad.m {
+    fill: var(--squad-m)
+}
+
+g.rank circle.foreground.a {
+    stroke: var(--squad-a)
+}
+
+g.rank circle.foreground.m {
+    stroke: var(--squad-m)
+}

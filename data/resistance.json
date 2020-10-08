@@ -1,0 +1,339 @@
+{
+    "$schema": "./cardlist.schema.json",
+    "characters": [
+        {
+            "name": "lieutenant",
+            "rank": 2,
+            "initiative": 9,
+            "deck": 1,
+            "character": "児島由美 Kojima Yumi",
+            "actions": [
+                {
+                    "name": "bolster",
+                    "normal": 3
+                },
+                {
+                    "name": "command",
+                    "normal": 2
+                }
+            ],
+            "image": "lieutenant.png"
+        },
+        {
+            "name": "warrant officer",
+            "shortName": "w. officer",
+            "rank": 1,
+            "initiative": 8,
+            "deck": 1,
+            "character": "松永明美 Matsunaga Akemi",
+            "actions": [
+                {
+                    "name": "bolster",
+                    "normal": 2
+                },
+                {
+                    "name": "inspire",
+                    "normal": 1
+                }
+            ],
+            "image": "warrant_officer.png"
+        },
+        {
+            "name": "staff sergeant",
+            "shortName": "staff sgt.",
+            "rank": 0,
+            "initiative": 8,
+            "deck": 4,
+            "character": "岡野秋 Okano Aki",
+            "defense": 5,
+            "actions": [
+                {
+                    "name": "scout",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "control"
+                },
+                {
+                    "name": "recon"
+                }
+            ],
+            "image": "staff_sergeant.png"
+        },
+        {
+            "name": "sergeant",
+            "rank": 0,
+            "initiative": 7,
+            "deck": 4,
+            "character": "山本直樹 Yamamoto Naoki",
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "control"
+                },
+                {
+                    "name": "demolition",
+                    "armored": 2,
+                    "structure": 2
+                }
+            ],
+            "image": "sergeant.png"
+        },
+        {
+            "name": "anti-mech riflegirl",
+            "shortName": "anti-mech",
+            "rank": 0,
+            "initiative": 4,
+            "deck": 4,
+            "character": "上原みのり Uehara Minori",
+            "defense": 4,
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "anti-mech",
+                    "armored": 2
+                }
+            ],
+            "image": "antimech.png"
+        },
+        {
+            "name": "engineer",
+            "initiative": 2,
+            "deck": 4,
+            "character": "但馬千枝 Tajima Chie",
+            "defense": 5,
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "repair"
+                },
+                {
+                    "name": "demolition",
+                    "armored": 3,
+                    "structure": 3
+                }
+            ],
+            "image": "engineer.png"
+        },
+        {
+            "name": "machine gunner",
+            "shortName": "gunner",
+            "initiative": 3,
+            "deck": 4,
+            "character": "Emma Hawkins",
+            "defense": 4,
+            "actions": [
+                {
+                    "name": "move",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 2
+                },
+                {
+                    "name": "suppress",
+                    "normal": 4
+                },
+                {
+                    "name": "repair"
+                }
+            ],
+            "image": "gunner.png"
+        },
+        {
+            "name": "saboteur",
+            "initiative": 5,
+            "deck": 4,
+            "character": "池田詩織 Ikeda Shiori",
+            "defense": 6,
+            "actions": [
+                {
+                    "name": "stalk",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "demolition",
+                    "armored": 2,
+                    "structure": 2
+                }
+            ],
+            "image": "saboteur.png"
+        },
+        {
+            "name": "scout",
+            "initiative": 6,
+            "deck": 4,
+            "character": "梅 Ume",
+            "defense": 6,
+            "actions": [
+                {
+                    "name": "scout",
+                    "normal": 2
+                },
+                {
+                    "name": "attack",
+                    "normal": 1
+                },
+                {
+                    "name": "conceal"
+                },
+                {
+                    "name": "recon"
+                }
+            ],
+            "image": "scout.png"
+        },
+        {
+            "name": "sniper",
+            "initiative": 2,
+            "deck": 4,
+            "character": "Аня Волкова Anya Volkova",
+            "defense": 6,
+            "actions": [
+                {
+                    "name": "stalk",
+                    "normal": 1
+                },
+                {
+                    "name": "attack",
+                    "normal": 3
+                },
+                {
+                    "name": "conceal"
+                }
+            ],
+            "image": "sniper.png"
+        }
+    ],
+    "vehicles": [
+        {
+            "name": "gun transport",
+            "armor": 5,
+            "threshold": 3,
+            "vehicle": "Adapted HDR-100 \"Maxwell\"",
+            "seats": [
+                {
+                    "actions": [
+                        {
+                            "name": "drive",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "navigate",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "anti-mech",
+                            "normal": 2
+                        }
+                    ]
+                }
+            ],
+            "image": "gun_t.png"
+        },
+        {
+            "name": "pilot transport",
+            "armor": 5,
+            "threshold": 3,
+            "vehicle": "Furukawa Samurai XT30",
+            "seats": [
+                {
+                    "actions": [
+                        {
+                            "name": "drive",
+                            "normal": 3
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "navigate",
+                            "normal": 3
+                        }
+                    ]
+                },
+                {}
+            ],
+            "image": "pilot_t.png"
+        },
+        {
+            "name": "patrol transport",
+            "armor": 5,
+            "threshold": 3,
+            "vehicle": "Adapted HS-33 \"Boltzmann\"",
+            "seats": [
+                {
+                    "actions": [
+                        {
+                            "name": "drive",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "navigate",
+                            "normal": 2
+                        }
+                    ]
+                },
+                {
+                    "actions": [
+                        {
+                            "name": "suppress",
+                            "normal": 3
+                        }
+                    ]
+                }
+            ],
+            "image": "patrol_t.png"
+        }
+    ],
+    "fog": {
+        "initiative": 1,
+        "deck": 8,
+        "name": "fog of war",
+        "quote": "we're still in the fight",
+        "image": "fogofwar.png"
+    }
+}

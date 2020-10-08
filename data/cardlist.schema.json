@@ -1,0 +1,123 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type":"object",
+    "properties": {
+        "characters": {
+            "type":"array",
+            "items": {
+                "type":"object",
+                "properties": {
+                    "name": {
+                        "type":"string",
+                        "pattern": "^[a-z0-9- ]+$"
+                    },
+                    "shortName": {
+                        "type":"string",
+                        "pattern": "^[a-z0-9- .]+$"
+                    },
+                    "rank": {
+                        "type":"integer",
+                        "minimum": 0,
+                        "maximum": 2
+                    },
+                    "initiative": {
+                        "type":"integer",
+                        "minimum": 1,
+                        "maximum": 9
+                    },
+                    "character": {
+                        "type":"string"
+                    },
+                    "squad": {
+                        "type":"string",
+                        "pattern": "^[a-z0-9]$"
+                    },
+                    "defense": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9
+                    },
+                    "deck": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "actions": { "$ref": "#/$defs/actions" },
+                    "image": {
+                        "type": "string"
+                    },
+                    "illustrator": {
+                        "type":"string"
+                    }
+                },
+                "required": ["name", "initiative", "image"]
+            }
+        },
+        "vehicles": {
+            "type":"array",
+            "items": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "armor": {
+                        "type": "integer"
+                    },
+                    "threshold": {
+                        "type": "integer"
+                    },
+                    "vehicle": {
+                        "type": "string"
+                    },
+                    "seats": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "icon": {
+                                    "type": "string"
+                                },
+                                "actions": {
+                                    "$ref": "#/$defs/actions"
+                                }
+                            }
+                        }
+                    },
+                    "image": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "$defs": {
+        "actions": {
+            "type":"array",
+            "items": {
+                "type":"object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9- ]+$"
+                    },
+                    "normal": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "armored": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "structure": {
+                        "type":"integer",
+                        "minimum": 1
+                    },
+                    "squad":{
+                        "type":"string",
+                        "pattern": "^[a-z]$"
+                    }
+                },
+                "required": ["name"]
+            }
+        }
+    }
+}
