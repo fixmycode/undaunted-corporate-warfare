@@ -1,4 +1,4 @@
-body h2 {
+body {
     font-family: sans-serif;
 }
 
@@ -39,7 +39,7 @@ g.name rect.box {
     mix-blend-mode: multiply;
 }
 
-g.name text.big, g.rank text {
+g.name text.big, g.rank text, g.name text.shield, g.name text.threshold, g.token g.name text, g.token text.shield {
     fill: var(--secondary-color);
     font-family: 'Bahnschrift';
     font-weight: bold;
@@ -56,8 +56,34 @@ g.name text.small {
     text-anchor: end;
 }
 
-g.name .icon {
+g.name path.icon, g.name path.shield {
     fill: var(--secondary-color);
+}
+
+g.name path.heavy, g.token path.heavy {
+    fill: transparent;
+    stroke: var(--secondary-color);
+    stroke-width: 2;
+}
+
+g.name text.shield, g.name text.threshold, g.token text.shield {
+    font-size: 35pt;
+    font-stretch: normal;
+    fill: var(--dark-color);
+}
+
+g.rank text {
+    font-stretch: normal;
+}
+
+g.name circle.threshold {
+    fill: rgba(0, 0, 0, 0.7);
+    stroke: var(--main-color);
+    stroke-width: 2;
+}
+
+g.name text.threshold {
+    fill: var(--main-color);
 }
 
 /* actions */
@@ -126,4 +152,55 @@ g.seat g.action > text {
 
 g.seat path.icon {
     fill: var(--secondary-color);
+}
+
+g.token g.name rect {
+    fill: var(--main-color);
+}
+
+g.token g.name text {
+    fill: var(--secondary-color);
+    font-size: 40pt;
+}
+
+g.token g.name.suppressed rect {
+    fill: var(--dark-color);
+}
+
+g.token rect.overlay {
+    fill: var(--dark-color);
+    opacity: .6;
+}
+
+g.token g.name.suppressed text {
+    fill: var(--accent-color);
+}
+
+g.token path.shield {
+    fill: var(--main-color);
+}
+
+g.token g.suppressed path.shield {
+    fill: var(--dark-color);
+    stroke-width: 2;
+    stroke: var(--accent-color);
+}
+
+g.token g.suppressed path.shield.heavy {
+    fill: transparent;
+}
+
+g.token text.shield {
+    font-size: 90pt;
+    fill: var(--secondary-color);
+}
+
+g.token g.suppressed text.shield {
+    fill: var(--accent-color);
+}
+
+g.token path.heavy {
+    fill: transparent;
+    stroke: var(--main-color);
+    stroke-width: 4;
 }

@@ -12,10 +12,24 @@
 <body>
     <h2>Corporate Warfare Card Generator</h2>
     <div id="app">
+        <input type="number" value="5" min="2" max="7" v-model="horizontal">
         <select v-model="selected">
             <option value="resistance">Resistance</option>
             <option value="corporation">The Corporation</option>
         </select>
+        <select v-model="kind">
+            <option value="deck">Deck</option>
+            <option value="vehicle">Vehicles</option>
+            <option value="token">Tokens</option>
+        </select>
+        <span v-if="kind != 'token'">
+            <input type="checkbox" v-model="back"> Back
+        </span>
+        <span v-else>
+            <select v-model="card">
+                <option :value="index" v-for="(card, index) in cards" :key="card.name">{{card.name}}</option>
+            </select>
+        </span>
         <button @click="savePng">Save</button>
     </div>
     <div id="result"></div>

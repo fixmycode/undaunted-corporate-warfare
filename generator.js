@@ -1,8 +1,12 @@
-const RATIO = 88/63
-const CARD_WIDTH = 512
-const CARD_HEIGHT = Math.floor(CARD_WIDTH*RATIO)
-const WIDTH = CARD_WIDTH*8
-const HEIGHT = CARD_HEIGHT*6
+const DECK_RATIO = 88/63
+const DECK_WIDTH = 512
+const DECK_HEIGHT = Math.floor(DECK_WIDTH*DECK_RATIO)
+const WIDTH = DECK_WIDTH*8
+const HEIGHT = DECK_HEIGHT*6
+const VEHICLE_RATIO = 80/120
+const VEHICLE_WIDTH = 908
+const VEHICLE_HEIGHT = Math.floor(VEHICLE_WIDTH*VEHICLE_RATIO)
+const TOKEN_SIZE = 1024
 
 const icons = {
     pilot: 'm -28.551797,-22.194618 6.809166,27.7591082 7.001238,4.2009585 A 17.283831,17.283831 0 0 0 -0.26917456,17.610618 17.283831,17.283831 0 0 0 13.447939,10.806906 l 8.294692,-4.9768 6.809166,-27.758498 -7.332693,6.285131 -4.846759,11.30901 A 17.283831,17.283831 0 0 0 -0.26917456,-16.957018 17.283831,17.283831 0 0 0 -16.628622,-5.1985532 L -21.219104,-15.909469 Z M -14.180549,-1.3302344 -0.26917456,3.6043568 13.642754,-1.3302344 12.377833,5.249532 -0.26917456,10.184662 -12.494721,5.249532 Z',
@@ -10,35 +14,106 @@ const icons = {
     gunner: 'm -1.1998563,-18.874072 v 1.816887 c -9.3429947,0.321453 -16.8479767,7.9581566 -16.9556147,17.35331793 h -2.214042 V 2.1925602 h 2.292492 c 0.834765,8.7012038 8.032952,15.5595588 16.8771647,15.8638508 V 21.36222 H 0.69657154 V 18.01991 C 9.2307129,17.400475 16.088866,10.671915 16.902553,2.1925602 h 2.963679 V 0.29613293 H 16.981005 C 16.875935,-8.8722742 9.7246026,-16.3654 0.69657154,-17.020684 v -1.853388 z m 0,3.713859 v 3.456717 c -6.3867031,0.316374 -11.4957297,5.5606675 -11.6019257,11.99962893 h -3.457265 C -16.15241,-8.0734809 -9.5160883,-14.841948 -1.1998563,-15.160213 Z m 0,5.3575061 V 0.29613293 h -9.7055007 c 0.104531,-5.41262173 4.3471312,-9.78731173 9.7055007,-10.09884303 z m 1.89642784,0.062651 C 5.7329253,-9.1176344 9.6286016,-4.8875533 9.7287085,0.29613631 H 0.69657154 Z M -10.770247,2.1925602 h 9.5703907 V 10.802481 C -6.0570309,10.520089 -9.9973873,6.899068 -10.770247,2.1925602 Z m 11.46681854,0 H 9.594145 C 8.8573535,6.6794711 5.2410522,10.178198 0.69657154,10.73983 Z m 10.81579146,0 h 3.482868 C 14.198003,9.6413983 8.2013778,15.511978 0.69657154,16.119124 V 12.649877 C 6.2729033,12.064268 10.743325,7.7129323 11.512363,2.1925602 Z'
 }
 
-function readCardList(ctx, card_list, set_name) {
-    let x = 0, y = 0
-    const image_path = '/images/' + set_name
-    ctx.rect(WIDTH, HEIGHT).fill('#000')
-    for (let card of cardGenerator(card_list)) {
-        if (x + CARD_WIDTH > WIDTH) {
-            x = 0
-            y += CARD_HEIGHT
-        }
-        drawCard(ctx, card, x, y, CARD_WIDTH, CARD_HEIGHT, image_path)
-        x += CARD_WIDTH
-    }
+const symbols = {
+    corporation: 'm 107.17491,51.646662 c -23.617378,4.3e-5 -42.763034,19.145699 -42.763078,42.763077 4.1e-5,23.617381 19.145699,42.763041 42.763078,42.763081 23.61753,1.7e-4 42.76343,-19.14555 42.76347,-42.763081 -4e-5,-23.617531 -19.14594,-42.76325 -42.76347,-42.763077 z m 0,6.784327 c 19.87055,-7.3e-5 35.97882,16.108205 35.97875,35.97875 -0.0129,10.038251 -4.21903,19.614641 -11.60216,26.415821 l -19.01416,-22.49 23.68452,-1.436208 2.97577,1.648083 3.3065,-4.449742 -8.92731,-7.086833 -1.98398,3.296165 -19.0722,1.509349 v -9.834429 l 15.27199,-1.324111 2.97577,1.648083 3.3065,-4.449744 -8.92731,-7.087228 -1.98398,3.29656 -10.64297,1.245006 v -3.310473 l 2.62636,-4.549518 -16.195407,-7.580143 5.345337,11.51312 v 4.888991 l -13.53566,1.583685 -9.919101,-1.648479 7.935121,9.559354 4.794384,-2.142587 10.725256,-0.929779 v 9.772419 L 81.098565,94.303205 71.283612,92.672217 C 72.209669,73.517081 87.997417,58.45516 107.17491,58.430989 Z m -35.896465,34.343387 7.83614,9.439704 4.794384,-2.14219 20.387961,-1.236261 v 0.310456 L 83.133424,121.12369 c -7.583638,-6.81158 -11.921919,-16.52038 -11.936868,-26.713951 0.01489,-0.545672 0.04219,-1.090934 0.08189,-1.635363 z m 41.108795,9.294494 8.76814,16.8061 10.31423,2.02254 c -6.62606,6.09104 -15.29441,9.47743 -24.2947,9.49098 -8.880011,-0.0146 -17.440917,-3.3127 -24.035523,-9.25963 l 13.756276,-5.95432 7.401267,-7.40126 v 21.9943 l 8.22371,-6.16779 -0.13339,-20.58598 z',
+    resistance: 'M -95.964844 138.63086 A 210.11172 210.11172 0 0 0 -306.07617 348.74219 A 210.11172 210.11172 0 0 0 -95.964844 558.85352 A 210.11172 210.11172 0 0 0 114.14844 348.74219 A 210.11172 210.11172 0 0 0 -95.964844 138.63086 z M -95.964844 171.96484 A 176.77669 176.77669 0 0 1 80.8125 348.74219 A 176.77669 176.77669 0 0 1 36.978516 465.05469 L -0.97460938 382.30078 L -14.646484 408.54492 L -140.39453 408.54492 L -65.544922 241.50977 L -96.974609 172.97656 L -228.20703 465.72266 A 176.77669 176.77669 0 0 1 -272.74023 348.74219 A 176.77669 176.77669 0 0 1 -95.964844 171.96484 z M -59.599609 318.21289 L -72.525391 344.38867 L -101.43359 348.58594 L -80.517578 368.95898 L -85.455078 397.72852 L -59.599609 384.14648 L -33.744141 397.72852 L -38.681641 368.95898 L -17.765625 348.58594 L -46.671875 344.38867 L -59.599609 318.21289 z M -228.03516 465.91992 L 36.171875 465.91992 A 176.77669 176.77669 0 0 1 -95.964844 525.51953 A 176.77669 176.77669 0 0 1 -228.03516 465.91992 z '
 }
 
-function* cardGenerator(card_list) {
-    for (let i = 0; i < card_list.characters.length; i++) {
-        const character = card_list.characters[i];
-        for (let j = 0; j < character.deck; j++) {
-            yield character         
+function getDocumentSize(card_type, card_list, horizontal, back) {
+    let count = 0, width = 0, height = 0
+    if (card_type == 'deck') {
+        count = 1
+        width = DECK_WIDTH
+        height = DECK_HEIGHT
+        for (const _ of deckGenerator(card_list, card_type)) {
+            count += 1
+        }
+    } else if (card_type == 'vehicle') {
+        count = card_list.vehicles.length + 1
+        width = VEHICLE_WIDTH
+        height = VEHICLE_HEIGHT 
+    } else if (card_type == 'token') {
+        width = height = TOKEN_SIZE
+        horizontal = count = 1
+    }
+    if (back) {
+        horizontal = 1
+        count = 1
+    }
+    return {width: width*horizontal, height:Math.ceil(count/horizontal)*height}
+}
+
+function drawToken(ctx, card, set_name, width, height) {
+    console.log('drawing token: '+card.name)
+    let content = ctx.group().addClass('token')
+    const image_path = `/images/${set_name}/${card.image}`
+    content.rect(width, height).fill('#000')
+    let image = content.image(image_path, function(ev) {
+        if (ev.target.naturalWidth > ev.target.naturalHeight) {
+            image.size(null, width/2)
+            image.cx(width/4)
+        } else image.size(width/2)
+        image.clipWith(content.rect(width/2, width/2))
+    })
+    let otherImage = content.image(image_path, function(ev) {
+        if (ev.target.naturalWidth > ev.target.naturalHeight) {
+            otherImage.size(null, width/2)
+            otherImage.cx(width/4)
+        } else otherImage.size(width/2)
+        otherImage.dmove(width/2, width/2)
+        otherImage.clipWith(content.rect(width/2, width/2).move(width/2, width/2))
+    })
+    content.rect(width/2, width/2).move(width/2, width/2).addClass('overlay')
+    drawCardBack(content, set_name, width/2, 0, width/2, width/2, 312/(1024/width))
+    let nameGroup = content.group().addClass('name')
+    let nameBox = nameGroup.rect(width/2, 73/(1024/width)).move(0, width/2)
+    nameGroup.text(card.name.toUpperCase()).leading(0).cx(nameBox.cx()).cy(nameBox.cy()+5)
+    content.add(nameGroup.clone().dy(nameGroup.height()).addClass('suppressed'))
+    let shield = drawShield(content, card, 126/(1024/width))
+    shield.cx(width/4).y(width/2-shield.height()-18)
+    content.add(shield.clone().dmove(width/2,width/2).addClass('suppressed'))
+}
+
+function drawCardList(ctx, card_list, set_name, card_type, width, height, back) {
+    let x = 0, y = 0
+    const image_path = '/images/' + set_name
+    ctx.rect(width, height).fill('#000')
+    const w = card_type == 'deck' ? DECK_WIDTH : VEHICLE_WIDTH
+    const h = card_type == 'deck' ? DECK_HEIGHT : VEHICLE_HEIGHT
+    if (back) {
+        drawCardBack(ctx, set_name, x, y, w, h)
+        return
+    }
+    for (let card of deckGenerator(card_list, card_type)) {
+        drawCard(ctx, card, x, y, w, h, image_path)
+        x += w
+        if (x + w > width) {
+            x = 0
+            y += h
         }
     }
-    if (card_list.fog) {
-        for (let k = 0; k < card_list.fog.deck; k++) {
-            yield card_list.fog
-        }
-    }
-    if (card_list.vehicles) {
+    drawCardBack(ctx, set_name, x, y, w, h)
+}
+
+function* deckGenerator(card_list, card_type) {
+    if (card_type == 'vehicle' || card_type == 'token') {
         for (const vehicle of card_list.vehicles) {
             yield vehicle
+        }
+    }
+    if (card_type == 'deck' || card_type == 'token') {
+        for (let i = 0; i < card_list.characters.length; i++) {
+            const character = card_list.characters[i];
+            for (let j = 0; j < character.deck; j++) {
+                if (card_type == 'token' && character.rank > 0) continue
+                yield character
+                if (card_type == 'token') break
+            }
+        }
+    }
+    if (card_type == 'deck' && card_list.fog) {
+        for (let k = 0; k < card_list.fog.deck; k++) {
+            yield card_list.fog
         }
     }
 }
@@ -90,7 +165,29 @@ function nameGroup(ctx, card, w, y) {
         icon.addClass('icon')
             .move(w, name_text.y()+name_text.bbox().height/2).dmove(-25-icon.width()-name_text.bbox().width, -3-icon.height()/2)
     }
+    if (card.vehicle) {
+        let shield = drawShield(group, card).x(20).cy(group.cy()+15)
+        let threshold = group.circle(55).addClass('threshold')
+            threshold.x(shield.x()+shield.width()+20).cy(shield.cy()+2)
+        let thresholdValue = group.text(card.threshold.toString()).leading(0).addClass('threshold')
+            thresholdValue.center(threshold.cx(), threshold.cy()+2)
+    }
     group.move(0, y)
+    return group
+}
+
+function drawShield(ctx, card, size) {
+    let group = ctx.group()
+    let shield = group.path('M 0,-32 24,-19 c 0,0 0,32 -25,48 C -25,13 -25,-18 -25,-18 Z')
+    if (size) shield.size(size)
+    shield.addClass('shield')
+    if (card.heavy) {
+        let heavy = shield.clone().addClass('heavy').scale(1.2).dy(.7)
+        group.add(heavy)
+    }
+    let armor = card.defense || card.armor || '?'
+    let armorValue = group.text(armor.toString()).leading(0).addClass('shield')
+    armorValue.center(shield.cx(), shield.cy())
     return group
 }
 
@@ -189,7 +286,7 @@ function seatGroup(ctx, seat, diameter, x) {
 
 function seatsGroup(ctx, card, w, y) {
     let content = ctx.group().addClass('seats')
-    let diameter = 180
+    let diameter = 252
     let spacing = (w-diameter*3)/4
     let x = 0
     for(let seat of card.seats) {
@@ -206,23 +303,24 @@ function drawVehicle(ctx, card, w, h, image_path) {
         content.add(ctx.image(image_path + '/' + card.image))
     }
     content.add(seatsGroup(ctx, card, w, 145))
-    content.add(nameGroup(ctx, card, w, 422))
+    content.add(nameGroup(ctx, card, w, h-90))
     return content
 }
 
 function drawCard(ctx, card, x, y, w, h, image_path) {
-    let content = null, clipArea = null
-    if (card.character || card.quote) {
-        clipArea = ctx.rect(w, h)
-        content = drawCharacter(ctx, card, w, h, image_path)
-        content.add(clipArea)
-        content.move(x, y)
-    } else if (card.vehicle) {
-        clipArea = ctx.rect(h, w)
-        content = drawVehicle(ctx, card, h, w, image_path)
-        content.add(clipArea)
-        content.transform({rotate: -90, origin: 'top right', translate: {x: -h}})
-        content.move(-y, x)
-    }
+    let clipArea = ctx.rect(w, h)
+    let process = drawCharacter
+    if (card.vehicle) process = drawVehicle
+    let content = process(ctx, card, w, h, image_path)
+    content.add(clipArea)
+    content.move(x, y)
     content.clipWith(clipArea)
+}
+
+function drawCardBack(ctx, set_list, x, y, w, h, s) {
+    let content = ctx.group().addClass('back')
+    let back = content.rect(w, h)
+    content.path(symbols[set_list]).size(s || 320).center(back.cx(), back.cy())
+    content.move(x, y)
+    return content
 }

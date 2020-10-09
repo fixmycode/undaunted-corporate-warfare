@@ -273,7 +273,7 @@
             "name": "pilot transport",
             "armor": 5,
             "threshold": 3,
-            "vehicle": "Furukawa Samurai XT30",
+            "vehicle": "Futura Samurai XT30",
             "seats": [
                 {
                     "actions": [

@@ -22,3 +22,11 @@ g.rank circle.foreground.a {
 g.rank circle.foreground.m {
     stroke: var(--squad-m)
 }
+
+g.back rect {
+    fill: black;
+}
+
+g.back path {
+    fill: var(--main-color);
+}

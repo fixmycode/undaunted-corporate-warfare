@@ -249,6 +249,7 @@
         {
             "name": "assault mech",
             "armor": 5,
+            "heavy": true,
             "threshold": 3,
             "vehicle": "XTC-78-β \"Kierkegaard\"",
             "image": "mech.png",

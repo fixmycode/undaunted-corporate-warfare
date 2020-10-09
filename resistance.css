@@ -4,3 +4,11 @@
     --secondary-color: #fff;
     --dark-color: #000;
 }
+
+g.back rect {
+    fill: var(--main-color);
+}
+
+g.back path {
+    fill: var(--secondary-color);
+}
