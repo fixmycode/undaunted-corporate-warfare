@@ -1,0 +1,232 @@
+{
+    "front": [
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "plain"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "oasis"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "plain"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "plain"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "plain"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "plain"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "difficult"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "scatter"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "scatter"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "scatter"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "scatter"
+        },
+        {
+            "defense": 2,
+            "vehicles": true,
+            "description": "rocks"
+        },
+        {
+            "defense": 1,
+            "vehicles": false,
+            "description": "difficult"
+        },
+        {
+            "defense": 3,
+            "height": 1,
+            "vehicles": false,
+            "description": "hill"
+        },
+        {
+            "defense": 3,
+            "height": 1,
+            "vehicles": false,
+            "description": "hill"
+        },
+        {
+            "defense": 0,
+            "description": "runway end",
+            "vehicles": true
+        },
+        {
+            "defense": 0,
+            "description": "road corner",
+            "vehicles": true
+        },
+        {
+            "defense": 0,
+            "description": "road across",
+            "vehicles": true
+        },
+        {
+            "defense": 0,
+            "description": "road straigth",
+            "vehicles": true
+        },
+        {
+            "defense": 0,
+            "description": "road across vegetation",
+            "vehicles": true
+        },
+        {
+            "defense": 1,
+            "description": "houses",
+            "vehicles": true
+        },
+        {
+            "defense": 1,
+            "description": "houses with trench",
+            "vehicles": true
+        }
+    ],
+    "back": [
+        {
+            "defense": 3,
+            "height": 1,
+            "vehicles": false,
+            "description": "hill"
+        },
+        {
+            "defense": 1,
+            "vehicles": false,
+            "description": "difficult"
+        },
+        {
+            "defense": 2,
+            "vehicles": true,
+            "description": "ruins"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "side road"
+        },
+        {
+            "defense": 2,
+            "description": "fortress",
+            "vehicles": false
+        },
+        {
+            "defense": 1,
+            "description": "camp",
+            "vehicles": true
+        },
+        {
+            "defense": 2,
+            "description": "rocks",
+            "vehicles": true
+        },
+        {
+            "defense": 1,
+            "vehicles": false,
+            "description": "difficult"
+        },
+        {
+            "defense": 2,
+            "vehicles": false,
+            "description": "hole"
+        },
+        {
+            "defense": 3,
+            "height": 1,
+            "vehicles": false,
+            "description": "hill"
+        },
+        {
+            "defense": 3,
+            "height": 1,
+            "vehicles": false,
+            "description": "hill"
+        },
+        {
+            "defense": 1,
+            "vehicles": false,
+            "description": "difficult"
+        },
+        {
+            "defense": 3,
+            "height": 1,
+            "vehicles": false,
+            "description": "hill"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "runway"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "runway"
+        },
+        {
+            "defense": 0,
+            "vehicles": true,
+            "description": "road end"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "town"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "town"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "town"
+        },
+        {
+            "defense": 2,
+            "vehicles": false,
+            "description": "fortress"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "camp"
+        },
+        {
+            "defense": 1,
+            "vehicles": true,
+            "description": "camp"
+        }
+    ]
+}
