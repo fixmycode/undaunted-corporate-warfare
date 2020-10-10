@@ -11,24 +11,17 @@ g.rank path, g.rank circle {
     opacity: .9;
 }
 
-g.rank circle.background {
+g.squad circle.background {
     fill: #000;
     opacity: .6;
     mix-blend-mode: multiply;
 }
 
-g.rank circle.foreground {
+g.squad circle.foreground {
     fill: transparent;
     stroke: var(--secondary-color);
     stroke-width: 3;
     opacity: 1;
-}
-
-g.rank text.squad {
-    fill: var(--secondary-color);
-    font-stretch: extra-expanded;
-    font-family: sans-serif;
-    font-size: 40pt;
 }
 
 /* name */
@@ -39,7 +32,8 @@ g.name rect.box {
     mix-blend-mode: multiply;
 }
 
-g.name text.big, g.rank text, g.name text.shield, g.name text.threshold, g.token g.name text, g.token text.shield {
+g.name text.big, g.rank text, g.name text.shield, g.squad text,
+g.name text.threshold, g.token g.name text, g.token text.shield {
     fill: var(--secondary-color);
     font-family: 'Bahnschrift';
     font-weight: bold;
@@ -62,7 +56,7 @@ g.name path.icon, g.name path.shield {
 
 g.name path.heavy, g.token path.heavy {
     fill: transparent;
-    stroke: var(--secondary-color);
+    stroke: var(--dark-color);
     stroke-width: 2;
 }
 
@@ -85,6 +79,14 @@ g.name circle.threshold {
 g.name text.threshold {
     fill: var(--main-color);
 }
+
+g.squad text {
+    fill: var(--secondary-color);
+    font-stretch: extra-expanded;
+    font-family: sans-serif;
+    font-size: 40pt;
+}
+
 
 /* actions */
 
@@ -167,13 +169,12 @@ g.token g.name.suppressed rect {
     fill: var(--dark-color);
 }
 
-g.token rect.overlay {
-    fill: var(--dark-color);
-    opacity: .6;
+g.token image.overlay {
+    opacity: .5;
 }
 
 g.token g.name.suppressed text {
-    fill: var(--accent-color);
+    fill: var(--main-color);
 }
 
 g.token path.shield {
@@ -183,7 +184,7 @@ g.token path.shield {
 g.token g.suppressed path.shield {
     fill: var(--dark-color);
     stroke-width: 2;
-    stroke: var(--accent-color);
+    stroke: var(--main-color);
 }
 
 g.token g.suppressed path.shield.heavy {
@@ -191,16 +192,20 @@ g.token g.suppressed path.shield.heavy {
 }
 
 g.token text.shield {
-    font-size: 90pt;
+    font-size: 70pt;
     fill: var(--secondary-color);
 }
 
 g.token g.suppressed text.shield {
-    fill: var(--accent-color);
+    fill: var(--main-color);
 }
 
 g.token path.heavy {
     fill: transparent;
-    stroke: var(--main-color);
+    stroke: var(--secondary-color);
     stroke-width: 4;
+}
+
+g.token g.squad text {
+    font-size: 70pt;
 }

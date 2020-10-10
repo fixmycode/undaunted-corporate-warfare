@@ -43,37 +43,6 @@ function getDocumentSize(card_type, card_list, horizontal, back) {
     return {width: width*horizontal, height:Math.ceil(count/horizontal)*height}
 }
 
-function drawToken(ctx, card, set_name, width, height) {
-    console.log('drawing token: '+card.name)
-    let content = ctx.group().addClass('token')
-    const image_path = `/images/${set_name}/${card.image}`
-    content.rect(width, height).fill('#000')
-    let image = content.image(image_path, function(ev) {
-        if (ev.target.naturalWidth > ev.target.naturalHeight) {
-            image.size(null, width/2)
-            image.cx(width/4)
-        } else image.size(width/2)
-        image.clipWith(content.rect(width/2, width/2))
-    })
-    let otherImage = content.image(image_path, function(ev) {
-        if (ev.target.naturalWidth > ev.target.naturalHeight) {
-            otherImage.size(null, width/2)
-            otherImage.cx(width/4)
-        } else otherImage.size(width/2)
-        otherImage.dmove(width/2, width/2)
-        otherImage.clipWith(content.rect(width/2, width/2).move(width/2, width/2))
-    })
-    content.rect(width/2, width/2).move(width/2, width/2).addClass('overlay')
-    drawCardBack(content, set_name, width/2, 0, width/2, width/2, 312/(1024/width))
-    let nameGroup = content.group().addClass('name')
-    let nameBox = nameGroup.rect(width/2, 73/(1024/width)).move(0, width/2)
-    nameGroup.text(card.name.toUpperCase()).leading(0).cx(nameBox.cx()).cy(nameBox.cy()+5)
-    content.add(nameGroup.clone().dy(nameGroup.height()).addClass('suppressed'))
-    let shield = drawShield(content, card, 126/(1024/width))
-    shield.cx(width/4).y(width/2-shield.height()-18)
-    content.add(shield.clone().dmove(width/2,width/2).addClass('suppressed'))
-}
-
 function drawCardList(ctx, card_list, set_name, card_type, width, height, back) {
     let x = 0, y = 0
     const image_path = '/images/' + set_name
@@ -118,6 +87,16 @@ function* deckGenerator(card_list, card_type) {
     }
 }
 
+function squadLetter(ctx, letter, size) {
+    let content = ctx.group().addClass('squad').addClass(letter)
+    let background = content.circle(size).addClass('background')
+    let letterText = content.text(letter.toUpperCase()).leading(0)
+    letterText.center(background.cx(), background.cy()-(2*size/65))
+    if (letter == 'm') letterText.dy(2*size/65)
+    content.circle(56*size/65).addClass('foreground').center(background.cx(), background.cy())
+    return content
+}
+
 function initiativeGroup(ctx, card) {
     let group = ctx.group().addClass('rank')
     let init_box = group.path('M 0 0 h 84 v 84 l -42 24 -42 -24 v -84 z')
@@ -125,19 +104,14 @@ function initiativeGroup(ctx, card) {
     let initiative = card.initiative ? card.initiative.toString() : '?'
     let init_text = group.text(initiative).leading(0)
     init_text.center(0, 0)
+    let letter
+    if (card.squad) {
+        letter = squadLetter(group, card.squad, 65).cx(init_box.cx()).y(init_box.height()-50)
+    }
     if (card.rank && card.rank > 0) {
         let rank_chevron = group.path('M 0 0 l 42 24 42 -24 v 30 l -42 24 -42 -24 v 30 z')
         rank_chevron.center(0, 0).dy(67)
-    }
-    if (card.squad) {
-        let sqbg = group.circle(65).addClass('background')
-        sqbg.cx(init_box.cx()).y(init_box.height()-5)
-        if (card.rank == 0) sqbg.dy(-35)
-        let squad_letter = group.text(card.squad.toUpperCase()).leading(0).addClass('squad')
-        squad_letter.cx(sqbg.cx()).cy(sqbg.cy()-2).addClass(card.squad)
-        if (card.squad == 'm') squad_letter.dy(2)
-        let sqfg = group.circle(56).addClass('foreground').addClass(card.squad)
-        sqfg.cx(sqbg.cx()).cy(sqbg.cy())
+        if (letter) letter.dy(rank_chevron.height()-20)
     }
     group.move(34, 0)
     return group
@@ -166,7 +140,7 @@ function nameGroup(ctx, card, w, y) {
             .move(w, name_text.y()+name_text.bbox().height/2).dmove(-25-icon.width()-name_text.bbox().width, -3-icon.height()/2)
     }
     if (card.vehicle) {
-        let shield = drawShield(group, card).x(20).cy(group.cy()+15)
+        let shield = shieldGroup(group, card.wounds, card.heavy && !card.defense).x(20).cy(group.cy()+15)
         let threshold = group.circle(55).addClass('threshold')
             threshold.x(shield.x()+shield.width()+20).cy(shield.cy()+2)
         let thresholdValue = group.text(card.threshold.toString()).leading(0).addClass('threshold')
@@ -176,18 +150,17 @@ function nameGroup(ctx, card, w, y) {
     return group
 }
 
-function drawShield(ctx, card, size) {
+function shieldGroup(ctx, value, heavy, size) {
     let group = ctx.group()
     let shield = group.path('M 0,-32 24,-19 c 0,0 0,32 -25,48 C -25,13 -25,-18 -25,-18 Z')
     if (size) shield.size(size)
     shield.addClass('shield')
-    if (card.heavy) {
-        let heavy = shield.clone().addClass('heavy').scale(1.2).dy(.7)
+    if (heavy) {
+        let heavy = shield.clone().addClass('heavy').scale(.88)
         group.add(heavy)
     }
-    let armor = card.defense || card.armor || '?'
-    let armorValue = group.text(armor.toString()).leading(0).addClass('shield')
-    armorValue.center(shield.cx(), shield.cy())
+    let armorValue = group.text(value.toString()).leading(0).addClass('shield')
+    armorValue.center(shield.cx(), shield.cy()+armorValue.bbox().height*.05)
     return group
 }
 
@@ -323,4 +296,53 @@ function drawCardBack(ctx, set_list, x, y, w, h, s) {
     content.path(symbols[set_list]).size(s || 320).center(back.cx(), back.cy())
     content.move(x, y)
     return content
+}
+
+function clippedImageGroup(ctx, path, x, y, w, h, callback) {
+    let content = ctx.group().addClass('clipImage')
+    let image = content.image(path, function(ev) {
+        let picture = ev.target
+        let clipRect = content.rect(w, h).move(x, y)
+        if (picture.naturalWidth >= ev.target.naturalHeight) {
+            if (w >= h) image.size(null, h).y(y).cx(clipRect.cx())
+            else image.size(w).x(x).cy(clipRect.cy())
+        } else {
+            if (w >= h) image.size(w).x(x).y(y)
+            else image.size(null, h).y(y).cx(clipRect.cx())
+        }
+        image.clipWith(clipRect)
+        if (callback) callback(image, clipRect)
+    })
+}
+
+function tokenOverlayGroup(ctx, card, height) {
+    let content = ctx.group()
+    let shield = shieldGroup(content, card.defense || card.heavy || '???', !card.defense && card.heavy, height)
+    if (card.vehicle && card.defense) {
+        let heavyShield = shieldGroup(content, card.heavy, true, height).x(height*1.2)
+    }
+    if (card.character && card.squad) {
+        let letter = squadLetter(content, card.squad, height+10).x(shield.x() + height*1.2).cy(shield.cy())
+    }
+    return content
+}
+
+function drawToken(ctx, card, set_name, width, height) {
+    console.log('drawing token: '+card.name)
+    let content = ctx.group().addClass('token')
+    const image_path = `/images/${set_name}/${card.image}`
+    content.rect(width, height).fill('#000')
+    clippedImageGroup(content, image_path, 0, 0, width/2, width/2)
+    clippedImageGroup(content, image_path, width/2, width/2, width/2, width/2, function(img) {
+        img.addClass('overlay')
+    })
+    drawCardBack(content, set_name, width/2, 0, width/2, width/2, 312/(1024/width))
+    let nameGroup = content.group().addClass('name')
+    let nameBox = nameGroup.rect(width/2, 73/(1024/width)).move(0, width/2)
+    let name = card.shortName || card.name || '????'
+    nameGroup.text(name.toUpperCase()).leading(0).cx(nameBox.cx()).cy(nameBox.cy()+5)
+    content.add(nameGroup.clone().dy(nameGroup.height()).addClass('suppressed'))
+    let shield = tokenOverlayGroup(content, card, 120/(1024/width))
+    shield.cx(width/4).y(width/2-shield.height()*1.2)
+    content.add(shield.clone().dmove(width/2,width/2).addClass('suppressed'))
 }

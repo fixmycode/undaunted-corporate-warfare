@@ -69,6 +69,7 @@
             "rank": 0,
             "initiative": 7,
             "deck": 4,
+            "defense": 5,
             "character": "山本直樹 Yamamoto Naoki",
             "actions": [
                 {
@@ -238,8 +239,10 @@
     "vehicles": [
         {
             "name": "gun transport",
-            "armor": 5,
+            "wounds": 5,
             "threshold": 3,
+            "defense": 7,
+            "heavy": 4,
             "vehicle": "Adapted HDR-100 \"Maxwell\"",
             "seats": [
                 {
@@ -271,8 +274,10 @@
         },
         {
             "name": "pilot transport",
-            "armor": 5,
+            "wounds": 5,
             "threshold": 3,
+            "defense": 7,
+            "heavy": 4,
             "vehicle": "Futura Samurai XT30",
             "seats": [
                 {
@@ -297,8 +302,10 @@
         },
         {
             "name": "patrol transport",
-            "armor": 5,
+            "wounds": 5,
             "threshold": 3,
+            "defense": 7,
+            "heavy": 4,
             "vehicle": "Adapted HS-33 \"Boltzmann\"",
             "seats": [
                 {

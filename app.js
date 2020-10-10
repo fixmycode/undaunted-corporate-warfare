@@ -19,7 +19,7 @@ let app = new Vue({
     methods: {
         savePng: function() {
             console.log(this.ctx)
-            saveSvgAsPng(this.ctx.node, `${this.selected}_${this.kind}${this.back ? '_back':''}.png`);
+            saveSvgAsPng(this.ctx.node, `${this.selected}_${this.kind}${this.back ? '_back':''}${this.kind == 'token' ? '_'+this.cards[this.card].name.replace(' ', '_'): ''}.png`);
         },
         generateCards: function() {
             fetch('/data/'+this.selected+'.json')

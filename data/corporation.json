@@ -65,6 +65,7 @@
             "name": "anti-mech riflegirl",
             "shortName": "anti-mech",
             "rank": 0,
+            "defense": 4,
             "squad": "a",
             "deck": 4,
             "initiative": 2,
@@ -94,6 +95,7 @@
             "rank": 0,
             "initiative": 3,
             "deck": 4,
+            "defense": 4,
             "squad": "a",
             "character": "長野雀 Nagano Suzume",
             "actions": [
@@ -118,6 +120,7 @@
             "initiative": 5,
             "squad": "a",
             "deck": 4,
+            "defense": 4,
             "character": "Sascha Ziegler",
             "actions": [
                 {
@@ -140,6 +143,7 @@
             "initiative": 6,
             "squad": "a",
             "deck": 4,
+            "defense": 5,
             "character": "Elsie Ziegler",
             "actions": [
                 {
@@ -186,6 +190,7 @@
             "rank": 0,
             "squad": "m",
             "deck": 4,
+            "defense": 4,
             "icon": "crew",
             "initiative": 3,
             "character": "中田恵 Nakata Megumi",
@@ -209,6 +214,7 @@
             "rank": 0,
             "squad": "m",
             "deck": 4,
+            "defense": 4,
             "icon": "pilot",
             "initiative": 2,
             "character": "森川恵美 Morikawa Emi",
@@ -229,6 +235,7 @@
             "rank": 0,
             "squad": "m",
             "deck": 4,
+            "defense": 4,
             "icon": "gunner",
             "initiative": 4,
             "character": "前田由美子 Maeda Yumiko",
@@ -248,8 +255,8 @@
     "vehicles": [
         {
             "name": "assault mech",
-            "armor": 5,
-            "heavy": true,
+            "wounds": 5,
+            "heavy": 5,
             "threshold": 3,
             "vehicle": "XTC-78-β \"Kierkegaard\"",
             "image": "mech.png",
@@ -292,8 +299,10 @@
         },
         {
             "name": "scout transport",
-            "armor": 5,
+            "wounds": 5,
             "threshold": 3,
+            "defense": 7,
+            "heavy": 4,
             "vehicle": "XPS-20-0 \"Foucault\"",
             "seats": [
                 {
@@ -318,8 +327,10 @@
         },
         {
             "name": "light transport",
-            "armor": 5,
+            "wounds": 5,
             "threshold": 3,
+            "defense": 7,
+            "heavy": 4,
             "vehicle": "XPC-10-K \"Emerson\"",
             "seats": [
                 {
