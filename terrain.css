@@ -1,0 +1,42 @@
+:root {
+    --main-color: #0068c9;
+    --accent-color:#5da5d5;
+    --secondary-color: #fff;
+    --dark-color: #000;
+}
+
+g.terrain text {
+    fill: var(--dark-color);
+    font-family: 'Bahnschrift';
+    font-weight: bold;
+    font-size: 50pt;
+}
+
+g.terrain > text {
+    fill: var(--secondary-color);
+    opacity: .5;
+}
+
+g.terrain path.shield {
+    fill: var(--main-color);
+    stroke: var(--main-color);
+    stroke-width: 4;
+}
+
+g.terrain .hill path.shield {
+    fill: var(--dark-color);
+}
+
+g.terrain .hill text {
+    fill: var(--main-color);
+}
+
+g.terrain rect, g.terrain line {
+    stroke-width: 1;
+    stroke: var(--main-color);
+    stroke-opacity: .5;
+}
+
+g.terrain line {
+    stroke-dasharray: 5;
+}

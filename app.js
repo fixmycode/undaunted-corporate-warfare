@@ -1,62 +1,113 @@
 let app = new Vue({
     el: '#app',
     data: {
-        selected: sessionStorage.getItem('selected') || 'resistance',
-        horizontal: sessionStorage.getItem('horizontal') || 5,
-        kind: sessionStorage.getItem('kind') || 'deck',
-        back: JSON.parse(sessionStorage.getItem('back')) || false,
-        cards: [{}],
-        card: sessionStorage.getItem("card") || -1,
+        selected: 'resistance',
+        kind: 'deck',
+        assets: null,
+        item: 'back',
         ctx: null,
         style: null
     },
     created: function() {
         this.style = document.createElement('link')
         this.style.rel = 'stylesheet'
+        this.selectedChanged(this.selected)
         document.head.appendChild(this.style)
-        this.generateCards(this.selected)
     },
     methods: {
         savePng: function() {
             console.log(this.ctx)
-            saveSvgAsPng(this.ctx.node, `${this.selected}_${this.kind}${this.back ? '_back':''}${this.kind == 'token' ? '_'+this.cards[this.card].name.replace(' ', '_'): ''}.png`);
+            saveSvgAsPng(this.ctx.node, this.fileName).then((result) => {
+                console.log('downloaded');
+            });
         },
-        generateCards: function() {
-            fetch('/data/'+this.selected+'.json')
+        loadData(value) {
+            let file = `/data/${value}.json`
+            fetch(file)
             .then(response => response.json())
-            .then((doc) => {
-                this.cards = Array.from(deckGenerator(doc, 'token'))
-                const horizontal = this.horizontal
-                if (this.ctx) this.ctx.node.parentNode.removeChild(this.ctx.node)
-                let {width, height} = getDocumentSize(this.kind, doc, horizontal, this.back)
-                this.ctx = SVG().addTo('#result').size(width, height)
-                console.log(`generating document: ${width}x${height}px`)
-                this.style.href = '/'+this.selected+'.css'
-                if (this.kind == 'token') drawToken(this.ctx, this.cards[this.card], this.selected, width, height)
-                else drawCardList(this.ctx, doc, this.selected, this.kind, width, height, this.back)
+            .then((data) => {
+                this.assets = data
+                console.log('assets loaded:', file)
             })
+            .catch((err) => {
+                this.assets = null
+                console.log('error loading data:', file)
+            })
+        },
+        generateAsset: function(config) {
+            let result = document.querySelector('#result')
+            if (!result) return
+            result.innerHTML = ''
+            this.ctx = drawAsset('#result', config)
+        },
+        selectedChanged(value) {
+            let path = `/${value}.css`
+            this.style.href = path
+            console.log('stylesheet changed: ', path)
+            this.loadData(value)
+        }
+    },
+    computed: {
+        notSingle() {
+            return !['token', 'other'].includes(this.kind)
+        },
+        factionSpecific() {
+            return !['terrain', 'objectives'].includes(this.selected)
+        },
+        assetList() {
+            if (!this.assets) return []
+            if (this.factionSpecific) {
+                if (this.kind == 'deck') {
+                    let list = Array.from(this.assets.characters)
+                    list.push(this.assets.fog)
+                    return list
+                } else if (this.kind == 'vehicle') return this.assets.vehicles
+                else if (this.kind == 'token') {
+                    return this.assets.vehicles.concat(this.assets.characters.filter(c => !c.rank || c.rank == 0))
+                }
+            } else {
+                const kind = ['front', 'back'].includes(this.kind) ? this.kind : 'front'
+                return this.assets[kind]
+            }
+            return []
+        },
+        computedConfig() {
+            let list = []
+            if (this.item == 'all') list = this.assetList
+            else if (this.item != 'back') {
+                if (this.assetList[this.item]) list = [this.assetList[this.item]]
+                else this.item = 0
+            } else if (this.kind == 'token') {
+                this.item = 0
+            }
+            const config = {
+                kind: this.kind,
+                selected: this.selected,
+                back: this.item == 'back',
+                list: list
+            }
+            this.generateAsset(config)
+            return config
+        },
+        fileName() {
+            let title = [this.selected, this.kind]
+            switch(this.kind) {
+                case 'deck': 
+                case 'vehicle':
+                    switch(this.item) {
+                        case 'back': title.push('back'); break
+                        case 'all': break
+                        default: title.push(this.assetList[this.item].name)
+                    }
+                    break
+                case 'token': title.push(this.assetList[this.item].name)
+            }
+            return title.join(' ').replaceAll(' ', '_') + '.png'
         }
     },
     watch: {
-        selected: function(newValue) {
-            this.generateCards()
-            sessionStorage.setItem('selected', newValue)
-        },
-        horizontal: function(newValue) {
-            this.generateCards()
-            sessionStorage.setItem('horizontal', newValue)
-        },
-        kind: function(newValue) {
-            this.generateCards()
-            sessionStorage.setItem('kind', newValue)
-        },
-        back: function(newValue) {
-            this.generateCards()
-            sessionStorage.setItem('back', newValue)
-        },
-        card: function(newValue) {
-            this.generateCards()
-            sessionStorage.setItem('card', newValue)
+        selected(value, old) {
+            this.selectedChanged(value)
         }
     }
 })

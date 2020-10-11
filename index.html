@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Generator</title>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://unpkg.com/canvg@3.0.4/lib/umd.js"></script>
     <script src="vendor/vue.js"></script>
     <script src="vendor/svg.js"></script>
     <script src="generator.js"></script>
@@ -12,27 +13,38 @@
 <body>
     <h2>Corporate Warfare Card Generator</h2>
     <div id="app">
-        <input type="number" value="5" min="2" max="7" v-model="horizontal">
         <select v-model="selected">
             <option value="resistance">Resistance</option>
-            <option value="corporation">The Corporation</option>
+            <option value="corporation">Corporation</option>
+            <option value="terrain" data-type="deck">Terrain</option>
+            <option value="objectives" disabled>Objectives</option>
         </select>
-        <select v-model="kind">
-            <option value="deck">Deck</option>
-            <option value="vehicle">Vehicles</option>
-            <option value="token">Tokens</option>
-        </select>
-        <span v-if="kind != 'token'">
-            <input type="checkbox" v-model="back"> Back
+        <span v-if="factionSpecific">
+            <select v-model="kind">
+                <option value="deck">Characters</option>
+                <option value="vehicle">Vehicles</option>
+                <option value="token">Combat Tokens</option>
+                <option value="other">Other</option>
+            </select>
+            <select v-model="item">
+                <option value="all" v-if="notSingle" selected="selected" key="all">-- All --</option>
+                <option value="back" v-if="notSingle" key="back">-- Back --</option>
+                <option :value="index" v-for="(item, index) in assetList" :key="item.name">{{item.name}}</option>
+            </select>
         </span>
         <span v-else>
-            <select v-model="card">
-                <option :value="index" v-for="(card, index) in cards" :key="card.name">{{card.name}}</option>
+            <select v-model="kind">
+                <option value="front" selected="selected">Front</option>
+                <option value="back">Back</option>
+            </select>
+            <select v-model="item">
+                <option value="all" selected="selected" key="all">-- All --</option>
+                <option :value="index" v-for="(item, index) in assetList" :key="item.name">{{index + 1}}{{kind == 'front' ? 'A' : 'B'}}</option>
             </select>
         </span>
         <button @click="savePng">Save</button>
+        <div id="result" :class="computedConfig"></div>
     </div>
-    <div id="result"></div>
     <script src="app.js"></script>
 </body>
 </html>
