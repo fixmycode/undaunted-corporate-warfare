@@ -1,9 +1,16 @@
 body {
     font-family: sans-serif;
+    background: rgb(53, 53, 53);
 }
 
-#app {
-    margin-bottom: 20px;
+h2 {
+    font-family: 'Bahnschrift', sans-serif;
+    text-transform: uppercase;
+    color: white;
+}
+
+#result {
+    margin-top: 20px;
 }
 
 g.rank path, g.rank circle {

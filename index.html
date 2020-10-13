@@ -2,8 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Corporate Warfare Asset Generator</title>
+    <link rel="stylesheet" href="/style/common.css">
     <script type="text/javascript" src="https://unpkg.com/canvg@3.0.4/lib/umd.js"></script>
     <script src="vendor/vue.js"></script>
     <script src="vendor/svg.js"></script>
@@ -11,39 +11,39 @@
     <script src="vendor/saveAsPng.js"></script>
 </head>
 <body>
-    <h2>Corporate Warfare Card Generator</h2>
+    <h2>Corporate Warfare Asset Generator</h2>
     <div id="app">
-        <select v-model="selected">
+        <select v-model="selected" @change="generateAsset(config)">
             <option value="resistance">Resistance</option>
             <option value="corporation">Corporation</option>
             <option value="terrain" data-type="deck">Terrain</option>
             <option value="objectives" disabled>Objectives</option>
         </select>
         <span v-if="factionSpecific">
-            <select v-model="kind">
+            <select v-model="kind" @change="generateAsset(config)">
                 <option value="deck">Characters</option>
                 <option value="vehicle">Vehicles</option>
                 <option value="token">Combat Tokens</option>
                 <option value="other">Other</option>
             </select>
-            <select v-model="item">
+            <select v-model="item" @change="generateAsset(config)">
                 <option value="all" v-if="notSingle" selected="selected" key="all">-- All --</option>
                 <option value="back" v-if="notSingle" key="back">-- Back --</option>
                 <option :value="index" v-for="(item, index) in assetList" :key="item.name">{{item.name}}</option>
             </select>
         </span>
         <span v-else>
-            <select v-model="kind">
+            <select v-model="kind" @change="generateAsset(config)">
                 <option value="front" selected="selected">Front</option>
                 <option value="back">Back</option>
             </select>
-            <select v-model="item">
+            <select v-model="item" @change="generateAsset(config)">
                 <option value="all" selected="selected" key="all">-- All --</option>
                 <option :value="index" v-for="(item, index) in assetList" :key="item.name">{{index + 1}}{{kind == 'front' ? 'A' : 'B'}}</option>
             </select>
         </span>
         <button @click="savePng">Save</button>
-        <div id="result" :class="computedConfig"></div>
+        <div id="result"></div>
     </div>
     <script src="app.js"></script>
 </body>

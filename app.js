@@ -3,16 +3,16 @@ let app = new Vue({
     data: {
         selected: 'resistance',
         kind: 'deck',
-        assets: null,
+        assets: {},
         item: 'back',
         ctx: null,
         style: null
     },
     created: function() {
-        this.style = document.createElement('link')
-        this.style.rel = 'stylesheet'
-        this.selectedChanged(this.selected)
-        document.head.appendChild(this.style)
+        this.loadStyle().then((link) => {
+            this.style = link
+        })
+        this.loadData()
     },
     methods: {
         savePng: function() {
@@ -21,30 +21,49 @@ let app = new Vue({
                 console.log('downloaded');
             });
         },
-        loadData(value) {
-            let file = `/data/${value}.json`
-            fetch(file)
-            .then(response => response.json())
-            .then((data) => {
-                this.assets = data
+        async loadData() {
+            let file = `/data/${this.selected}.json`
+            if (this.assets[this.selected]) return this.assets[this.selected]
+            try {
+                const response = await fetch(file)
+                const data = await response.json()
+                this.$set(this.assets, this.selected, data)
                 console.log('assets loaded:', file)
-            })
-            .catch((err) => {
-                this.assets = null
+                return data
+            } catch (err) {
+                this.$set(this.assets, this.selected, null)
                 console.log('error loading data:', file)
-            })
+                return err
+            }
         },
-        generateAsset: function(config) {
+        async generateAsset() {
+            const config = this.config
+            await this.loadStyle()
+            await this.loadData()
             let result = document.querySelector('#result')
-            if (!result) return
-            result.innerHTML = ''
+            if (result) result.innerHTML = ''
+            for (const key in config) {
+                if (config[key] === null) return
+            }
             this.ctx = drawAsset('#result', config)
+            console.log('assets generated')
         },
-        selectedChanged(value) {
-            let path = `/${value}.css`
-            this.style.href = path
-            console.log('stylesheet changed: ', path)
-            this.loadData(value)
+        loadStyle() {
+            return new Promise((resolve, reject) => {
+                let path = `/style/${this.selected}.css`
+                let style = this.style || document.createElement('link')
+                style.type = 'text/css'
+                style.rel = 'stylesheet'
+                style.addEventListener('load', (ev) => {
+                    console.log('stylesheet changed: ', path)
+                    resolve(style)
+                })
+                style.addEventListener('error', (ev) => {
+                    reject(ev)
+                })
+                style.href = path
+                document.head.appendChild(style)
+            })
         }
     },
     computed: {
@@ -55,27 +74,32 @@ let app = new Vue({
             return !['terrain', 'objectives'].includes(this.selected)
         },
         assetList() {
-            if (!this.assets) return []
+            if (!this.assets[this.selected]) return []
+            const assetObject = this.assets[this.selected]
             if (this.factionSpecific) {
                 if (this.kind == 'deck') {
-                    let list = Array.from(this.assets.characters)
-                    list.push(this.assets.fog)
+                    let list = Array.from(assetObject.characters)
+                    list.push(assetObject.fog)
                     return list
-                } else if (this.kind == 'vehicle') return this.assets.vehicles
+                } else if (this.kind == 'vehicle') return assetObject.vehicles
                 else if (this.kind == 'token') {
-                    return this.assets.vehicles.concat(this.assets.characters.filter(c => !c.rank || c.rank == 0))
+                    return assetObject.vehicles.concat(assetObject.characters.filter(c => !c.rank || c.rank == 0))
                 }
             } else {
                 const kind = ['front', 'back'].includes(this.kind) ? this.kind : 'front'
-                return this.assets[kind]
+                return assetObject[kind]
             }
             return []
         },
-        computedConfig() {
+        config() {
             let list = []
             if (this.item == 'all') list = this.assetList
             else if (this.item != 'back') {
-                if (this.assetList[this.item]) list = [this.assetList[this.item]]
+                if (this.assetList[this.item]) {
+                    let elem = this.assetList[this.item]
+                    elem.index = this.item
+                    list = [elem]
+                }
                 else this.item = 0
             } else if (this.kind == 'token') {
                 this.item = 0
@@ -86,7 +110,6 @@ let app = new Vue({
                 back: this.item == 'back',
                 list: list
             }
-            this.generateAsset(config)
             return config
         },
         fileName() {
@@ -103,11 +126,6 @@ let app = new Vue({
                 case 'token': title.push(this.assetList[this.item].name)
             }
             return title.join(' ').replaceAll(' ', '_') + '.png'
-        }
-    },
-    watch: {
-        selected(value, old) {
-            this.selectedChanged(value)
         }
     }
 })

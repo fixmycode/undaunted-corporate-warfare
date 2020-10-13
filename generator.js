@@ -65,7 +65,7 @@ function drawCardList(ctx, list, selected, drawProcess, kind) {
         let elem = list[i]
         for (let j = 0; j < elem.deck || j < 1; j++) {
             elem.faction = kind
-            elem.index = i
+            elem.index = elem.index || i
             let card = drawProcess(ctx, elem, imagePath).move(x, y)
             x += card.width()
             if (x + card.width() > ctx.width()) {
@@ -74,7 +74,10 @@ function drawCardList(ctx, list, selected, drawProcess, kind) {
             }
         }
     }
-    if (selected != 'terrain') drawProcess(ctx, {back: selected}).move(x, y)
+    //hidden card must be on the last slot
+    if (list.length == 1) return
+    let hiddenCard = drawProcess(ctx, {back: selected})
+    if (hiddenCard) hiddenCard.move(ctx.width() - hiddenCard.width(), ctx.height() - hiddenCard.height())
 }
 
 function drawCharacter(ctx, card, imagePath) {
@@ -137,6 +140,7 @@ function drawCardBack(ctx, selected, width, height, symbolSize) {
 }
 
 function drawTerrain(ctx, tile, imagePath) {
+    if (tile.back) return
     let content = ctx.group().addClass('terrain')
     let frame = content.rect(TERRAIN_SIZE, TERRAIN_SIZE)
     const div = 7
